@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 require('dotenv').config();
 
+console.log('✅ JWT_SECRET naudojamas (auth.js):', process.env.JWT_SECRET);
+
 // Registracija
 router.post('/register', async (req, res) => {
     const { username, password } = req.body;

@@ -1,21 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Task = require('../models/Task');
-const jwt = require('jsonwebtoken');
-
-// Middleware – autentifikacija
-const authMiddleware = (req, res, next) => {
-    const token = req.headers['authorization'];
-    if (!token) return res.status(401).json({ error: 'Nėra tokeno' });
-
-    try {
-        const decoded = jwt.verify(token, 'slaptas_raktas'); // naudok .env produkcijoj
-        req.userId = decoded.id;
-        next();
-    } catch (err) {
-        res.status(401).json({ error: 'Blogas tokenas' });
-    }
-};
+const authMiddleware = require('../middleware/authMiddleware');
 
 // Gauti visas užduotis
 router.get('/', authMiddleware, async (req, res) => {
@@ -47,4 +33,3 @@ router.delete('/:id', authMiddleware, async (req, res) => {
 });
 
 module.exports = router;
- 
